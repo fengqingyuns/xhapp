@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.modules.user.dao.MasterDao">
+
+    <select id="select" resultType="com.example.demo.modules.user.entity.Master">
+        select * from t_master where master_id= #{masterId}
+    </select>
+   
+     <insert id="save">
+        insert into t_master(name,password,email,phone,address,sex,birthday,create_date)values
+        (#{name},#{password},#{email},#{phone},#{address},#{sex},#{birthday},#{createDate})
+    </insert> 
+    <update id="update">
+        
+    </update>
+    <delete id="delete">
+        delete from t_master where master_id = #{masterId}
+    </delete>
+</mapper>

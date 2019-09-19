@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+ <script th:src="@{/js/vue.min.js}" ></script>
+ <link rel="stylesheet" type="text/css" th:href="@{css/demo.css}">
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div id="app">
+	<p>
+		{{message}}
+	</p>
+</div>
+<div v-bind:class="{'demo':use}" id="demo">
+	v-bind:class指令
+</div>
+<div id="vif">
+	<p v-if="seen">you can see me</p>
+</div>
+<div id="vmodel">
+	<p>{{msg}}</p>
+	<input v-model="msg">
+	<input type="checkbox" v-model="msg" >
+</div>
+</body>
+<script>
+	new Vue({
+		el:'#app',
+		data:{
+			message:'hello vue !'
+		}
+	})
+	new Vue(
+			{
+				el:'#demo',
+				data:{
+					use:false
+				}
+				
+			})
+	new Vue({
+		el:'#vif',
+		data:{
+			seen:true
+		}
+	})
+	new Vue({
+		el:'#vmodel',
+		data:{
+			msg:'hello'
+		}
+	})
+</script>
+</html>

@@ -52,7 +52,7 @@ public class OAuth2Filter extends AuthenticatingFilter {
             httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
             httpResponse.setHeader("Access-Control-Allow-Origin", HttpContextUtils.getOrigin());
 
-            String json = new Gson().toJson("error");
+            String json = new Gson().toJson("shiro验证问题oauth2filter  error=原因是token异常");
 
             httpResponse.getWriter().print(json);
 

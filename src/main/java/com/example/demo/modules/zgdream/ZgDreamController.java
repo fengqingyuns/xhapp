@@ -1,4 +1,4 @@
-/*package com.example.demo.modules.zgdream;
+package com.example.demo.modules.zgdream;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -11,6 +11,7 @@ import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
@@ -25,8 +26,8 @@ import com.example.demo.modules.xiaohua.entity.Dream;
 import com.example.demo.modules.xiaohua.service.ZhouGongSleepDreamService;
 import com.example.demo.modules.zgdream.entity.ExcelDream;
 import com.example.demo.util.ExcelUtil;
-*/
-/*@Controller
+
+@Controller
 public class ZgDreamController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ZgDreamController.class);
 	@Autowired
@@ -52,7 +53,7 @@ public class ZgDreamController {
 		List<Dream> dreamForList = null;
 		SearchQuery searchQuery = null;
 		String json = null;
-	//	pageable = PageRequest.of(1, 2);
+		pageable = PageRequest.of(1, 4);
 		//elasticsearchTemplate.deleteIndex("");
 		searchQuery = new NativeSearchQueryBuilder().withQuery(new MatchQueryBuilder("title", dreamInfo))
 				.withPageable(pageable).build();
@@ -94,7 +95,7 @@ public class ZgDreamController {
 	}
 	@RequestMapping(value = "/expdream")
 	public void expdream(HttpServletResponse response, HttpServletRequest request,String dreamInfo,@PageableDefault(size = 20) Pageable pageable) throws IOException{
-	//	List<Dream> list = new ArrayList<Dream>();
+		List<Dream> list = new ArrayList<Dream>();
 		
 		List<Dream> dreamForList = null;List<ExcelDream> dreamForExcel = new ArrayList<ExcelDream>();
 		SearchQuery searchQuery = null;
@@ -123,4 +124,3 @@ public class ZgDreamController {
         }
 	}
 }
-*/

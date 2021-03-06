@@ -61,8 +61,10 @@ public class RegController {
 				result.setSuccess(true);
 				result.setMsg("注册成功");
 			} catch (Exception e) {
+			    e.printStackTrace();
 				// TODO: handle exception
 				result.setSuccess(false);
+				result.setMsg("注册失败");
 			}
 			return result;
 		}

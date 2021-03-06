@@ -17,10 +17,11 @@ public class TestMQ {
     public String getString(String name) {
         TestUser testUser = new TestUser();
         testUser.setUserName(name);
-        rabbitMqSender.sendRabbitmqDirect("TESTQUEUE1",testUser);
-        rabbitMqSender.sendRabbitmqTopic("lazy.1.2",testUser);
-        rabbitMqSender.sendRabbitmqTopic("lazy.12",testUser);
         
+       // rabbitMqSender.sendRabbitmqDirect("TESTQUEUE1",testUser);
+       // rabbitMqSender.sendRabbitmqTopic("1.TEST.2",testUser);
+      //  rabbitMqSender.sendRabbitmqTopic("lazy.12",testUser);
+        rabbitMqSender.sendRabbitmqFanout(testUser);
        
         
         return "success";

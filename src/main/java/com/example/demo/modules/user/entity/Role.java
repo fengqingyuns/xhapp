@@ -2,12 +2,17 @@ package com.example.demo.modules.user.entity;
 
 import java.util.Date;
 import java.util.List;
+
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
+@TableName(value = "t_role")
 public class Role {
 
     private int roleId;
     private String roleName;
     private String remark;
     private int createUserId;
+    @TableField(exist = false)
     private List<Long> menuIdList;
     private Date createTime;
     public int getRoleId() {

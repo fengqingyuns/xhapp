@@ -64,6 +64,7 @@ public class ShiroConfig {
         filterMap.put("/tologin", "anon");
         filterMap.put("/doMemberLogin", "anon");
         filterMap.put("/doLogin", "anon");
+        filterMap.put("/act", "anon");
         filterMap.put("/reg", "anon");
         filterMap.put("/checkUser", "anon");
         filterMap.put("/RegUser", "anon");
@@ -72,7 +73,15 @@ public class ShiroConfig {
         filterMap.put("/retrivepw", "anon");
         filterMap.put("/jquery/**", "anon");
         filterMap.put("/css/**", "anon");
+        filterMap.put("/ztree/**", "anon");
         filterMap.put("/bootstrap/**", "anon");
+        filterMap.put("/film/img/**", "anon");
+        filterMap.put("/film/**", "anon");
+        filterMap.put("/menu/index", "anon");
+        filterMap.put("/permission/**", "anon");
+        filterMap.put("/user/**", "anon");
+        filterMap.put("/common/**", "anon");
+        filterMap.put("/json/**", "anon");
         filterMap.put("/script/**", "anon");
         filterMap.put("/js/**", "anon");
         filterMap.put("/properties/key.properties", "anon");

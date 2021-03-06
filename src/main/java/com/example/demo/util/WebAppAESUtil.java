@@ -7,7 +7,7 @@ import javax.crypto.spec.SecretKeySpec;
 /**
 *  <p>Title：WebAppAESUtil.java</p>
 *  <p>Description：Web与APP后台之间的加密解密工具类</p>
-*  @author 张泽武
+*  @author 李涛
 */
 public class WebAppAESUtil {
 

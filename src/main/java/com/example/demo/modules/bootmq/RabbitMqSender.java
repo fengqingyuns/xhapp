@@ -22,13 +22,13 @@ import com.example.demo.config.RabbitMqEnum;
 public class RabbitMqSender implements RabbitTemplate.ConfirmCallback{
     /** logger */
     private static final Logger logger = LoggerFactory.getLogger(RabbitMqSender.class);
-
+    @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    @Autowired
+    
     public RabbitMqSender(RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;
-        this.rabbitTemplate.setConfirmCallback(this);
+        //this.rabbitTemplate.setConfirmCallback(this);
     }
 
     @Override
@@ -41,6 +41,17 @@ public class RabbitMqSender implements RabbitTemplate.ConfirmCallback{
         }
     }
 
+    
+    /**
+     * 发送到 指定routekey的指定queue
+     * @param routeKey
+     * @param obj
+     */
+    public void sendRabbitmqFanout(Object obj) {
+        CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
+        logger.info("send:fanout " + correlationData.getId());
+        this.rabbitTemplate.convertAndSend(RabbitMqEnum.Exchange.CONTRACT_FANOUT.getCode(),"",  obj, correlationData);
+    }
     /**
      * 发送到 指定routekey的指定queue
      * @param routeKey
@@ -48,7 +59,7 @@ public class RabbitMqSender implements RabbitTemplate.ConfirmCallback{
      */
     public void sendRabbitmqDirect(String routeKey,Object obj) {
         CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
-        logger.info("send: " + correlationData.getId());
+        logger.info("send:direct " + correlationData.getId());
         this.rabbitTemplate.convertAndSend(RabbitMqEnum.Exchange.CONTRACT_DIRECT.getCode(), routeKey , obj, correlationData);
     }
 
@@ -59,7 +70,7 @@ public class RabbitMqSender implements RabbitTemplate.ConfirmCallback{
      */
     public void sendRabbitmqTopic(String routeKey,Object obj) {
         CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
-        logger.info("send: " + correlationData.getId());
+        logger.info("send:topic " + correlationData.getId());
         this.rabbitTemplate.convertAndSend(RabbitMqEnum.Exchange.CONTRACT_TOPIC.getCode(), routeKey , obj, correlationData);
     }
 }

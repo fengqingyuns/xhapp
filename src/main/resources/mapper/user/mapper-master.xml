@@ -5,7 +5,7 @@
 
 <mapper namespace="com.example.demo.modules.user.dao.MasterDao">
 
-    <select id="select" resultType="com.example.demo.modules.user.entity.Master">
+    <!-- <select id="select" resultType="com.example.demo.modules.user.entity.Master">
         select * from t_master where master_id= #{masterId}
     </select>
    
@@ -18,5 +18,16 @@
     </update>
     <delete id="delete">
         delete from t_master where master_id = #{masterId}
-    </delete>
+    </delete> -->
+    
+    <select id="queryAllPerms" resultType="string">   
+       select perms from t_user_role u left join t_menu_role m on u.role_id = m.role_id 
+       left join menu me on me.menu_id = m.menu_id where u.user_id = #{userId} 
+       
+    </select>
+    
+    <select id="queryMenuIdsByUserId" resultType="string">
+        select DISTINCT m.menu_id from t_menu_role m left join t_user_role u on u.role_id = m.role_id
+        where u.user_id = #{userId}
+    </select>
 </mapper>

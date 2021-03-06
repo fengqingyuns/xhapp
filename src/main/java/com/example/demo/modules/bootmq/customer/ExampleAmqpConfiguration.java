@@ -1,4 +1,4 @@
-/*
+
 package com.example.demo.modules.bootmq.customer;
 
 import org.springframework.amqp.core.AcknowledgeMode;
@@ -16,13 +16,13 @@ import com.example.demo.modules.bootmq.SerializeUtil;
 import com.example.demo.modules.bootmq.TestUser;
 import com.rabbitmq.client.Channel;
 
-*/
+
 /**
  * 消费者配置
  *
  * @author chenhf
  * @create 2017-10-30 下午3:14
- **//*
+ **/
 
 @Configuration
 @AutoConfigureAfter(RabbitMqConfig.class)
@@ -58,7 +58,7 @@ public class ExampleAmqpConfiguration {
                     System.out.println("4接收成功"+testUser.toString());
                     channel.basicAck(message.getMessageProperties().getDeliveryTag(),false);
                 }
-                if ("1".equals(testUser.getUserName())){
+                if ("5".equals(testUser.getUserName())){
                     System.out.println(testUser.toString());
                     channel.basicNack(message.getMessageProperties().getDeliveryTag(),false,true);
                 }
@@ -66,4 +66,4 @@ public class ExampleAmqpConfiguration {
             }
         };
     }
-}*/
+}

@@ -1,13 +1,11 @@
 package com.example.demo.modules.login.controller;
 
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.example.demo.modules.login.service.LoginUserService;
 import com.example.demo.modules.shiro.service.UserTokenService;
 import com.example.demo.modules.user.entity.User;
@@ -44,10 +42,12 @@ public class LoginController {
 				result.setSuccess(false);
 				return result;
 			}
-			//user.setLoginacct(WebAppAESUtil.decrypt(user.getLoginacct()));
-			//user.setUserpswd(MD5Util.digest(WebAppAESUtil.decrypt(user.getUserpswd())));
-			user.setLoginacct(user.getLoginacct());
-			user.setUserpswd(MD5Util.digest(user.getUserpswd()));
+			user.setLoginacct(WebAppAESUtil.decrypt(user.getLoginacct()));
+			user.setUserpswd(MD5Util.digest(WebAppAESUtil.decrypt(user.getUserpswd())));
+			
+			/*user.setLoginacct("root");
+			user.setUserpswd(MD5Util.digest("123456"));
+			user.setType("管理员");*/
 			User dbuser = null;
 	
 				dbuser = loginUserService.queryUser4Login(user);
@@ -65,9 +65,11 @@ public class LoginController {
 			
 			result.setSuccess(true);
 			result.setData(token);
-			
+			result.setId(id);
+			result.setUserName(user.getLoginacct());
+			result.setMsg("登录成功");
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 			result.setSuccess(false);
 		}
 		

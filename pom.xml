@@ -6,6 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.0.6.RELEASE</version>
+		<!-- <version>2.0.6.RELEASE</version> -->
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
@@ -18,7 +19,11 @@
 		<java.version>1.8</java.version>
 	</properties> -->
 <properties>
-<shiro.version>1.4.0</shiro.version>
+        <shiro.version>1.4.0</shiro.version>
+        <mybatisplus.spring.boot.version>3.0.6</mybatisplus.spring.boot.version>
+        <mybatisplus.version>3.0.6</mybatisplus.version>
+        <jackson.verson>1.9.7</jackson.verson>
+        <jacksons.verson>2.9.7</jacksons.verson>
 </properties>
 	<dependencies>
 	<dependency>
@@ -112,11 +117,16 @@
 			<artifactId>xxl-job-core</artifactId>
 			<version>1.9.0-SNAPSHOT</version>
 		</dependency> -->
-		<dependency>
+		<!-- <dependency>
             <groupId>com.xuxueli</groupId>
             <artifactId>xxl-job-core</artifactId>
             <version>2.1.1-SNAPSHOT</version>
-        </dependency>
+        </dependency> -->
+        <dependency>
+    <groupId>com.xuxueli</groupId>
+    <artifactId>xxl-job-core</artifactId>
+    <version>2.2.0</version>
+</dependency>
 		<!-- jdbc -->
 		  <dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -137,11 +147,13 @@
 	    <groupId>com.fasterxml.jackson.dataformat</groupId>
 	    <artifactId>jackson-dataformat-yaml</artifactId>
 	    <version>2.9.7</version>
+	  
 	</dependency>
 		<dependency>
     <groupId>org.apache.directory.studio</groupId>
     <artifactId>org.apache.commons.lang</artifactId>
     <version>2.6</version>
+    
 </dependency>
 
 <dependency>
@@ -149,20 +161,62 @@
     <artifactId>lucene-core</artifactId>
     <version>6.6.1</version>
 </dependency>
-<dependency>
+<!--  <dependency>
     <groupId>org.springframework.data</groupId>
     <artifactId>spring-data-elasticsearch</artifactId>
-</dependency>
-<dependency>
+ 
+</dependency>  -->
+  <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-elasticsearch -->
+  <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-elasticsearch -->
+ 
+  
+ <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-elasticsearch -->
+
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-elasticsearch</artifactId>
+        </dependency> 
+ <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+        </dependency>
+  
+
+        
+		 <dependency>
+		    <groupId>com.baomidou</groupId>
+		    <artifactId>mybatis-plus-boot-starter</artifactId>
+		      <version>${mybatisplus.spring.boot.version}</version>
+		</dependency>
+        
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus</artifactId>
+            <version>${mybatisplus.version}</version>
+        </dependency> 
+
+
+ <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+             <version>${jackson.verson}</version> 
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+             <version>${jackson.verson}</version> 
+        </dependency>
+ <dependency>
     <groupId>com.fasterxml.jackson.core</groupId>
     <artifactId>jackson-core</artifactId>
-    <version>2.9.7</version>
+     <version>${jacksons.verson}</version> 
 </dependency>
-<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+
 <dependency>
     <groupId>com.fasterxml.jackson.core</groupId>
     <artifactId>jackson-databind</artifactId>
-    <version>2.9.7</version>
+    <version>${jacksons.verson}</version>
 </dependency>
         <!-- shiro -->
         <dependency>
@@ -232,7 +286,11 @@
             <version>3.14</version>
         </dependency>
         
-        
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>4.1.2</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-amqp -->
 <dependency>
     <groupId>org.springframework.boot</groupId>
@@ -257,6 +315,26 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.5</version>
+        </dependency> 
+        
+          
+        <!-- 流程 -->
+ <!-- https://mvnrepository.com/artifact/org.activiti/activiti-engine -->
+ <dependency>
+    <groupId>org.activiti</groupId>
+    <artifactId>activiti-engine</artifactId>
+    <version>5.15.1</version>
+</dependency>
+       
+<dependency>
+    <groupId>org.activiti</groupId>
+    <artifactId>activiti-spring</artifactId>
+    <version>5.15.1</version>
+</dependency> 
+ 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency> 
         
 	</dependencies>

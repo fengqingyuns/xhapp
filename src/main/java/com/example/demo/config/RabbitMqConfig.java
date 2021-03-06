@@ -14,13 +14,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
+import com.example.demo.modules.bootmq.callback.MsgSendConfirmCallBack;
+
 /**
  * RabbitMq配置文件读取类
  *
  * @author chenhf
  * @create 2017-10-23 上午9:31
  **/
-/*
+
 @Configuration
 //@ConfigurationProperties(prefix = "spring.rabbitmq")
 
@@ -59,10 +61,11 @@ public class RabbitMqConfig {
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
     public RabbitTemplate rabbitTemplate(){
         RabbitTemplate template = new RabbitTemplate(connectionFactory());
+        template.setConfirmCallback(msgSendConfirmCallBack());
         return template;
     }
     
-    */
+    
 /*@Bean
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)//需要消费者回调
     public RabbitTemplate rabbitTemplate(){
@@ -81,18 +84,18 @@ public class RabbitMqConfig {
      * 确认并且保证消息被送达，提供了两种方式：发布确认和事务。(两者不可同时使用)
      * 在channel为事务时，不可引入确认模式；同样channel为确认模式下，不可使用事务。
      * @return
-     *//*
+     */
 
-   */
-/* @Bean
+   
+    @Bean
     public MsgSendConfirmCallBack msgSendConfirmCallBack(){
        return new MsgSendConfirmCallBack();
     }
 
-    @Bean
+  /*  @Bean
     public MsgSendReturnCallBack msgSendReturnCallBack(){
        return new MsgSendReturnCallBack();
-    }*//*
+    }*/
 
 }
-*/
+

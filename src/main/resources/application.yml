@@ -1,11 +1,39 @@
 spring:
+  
+#spring.servlet.multipart.max-file-size = 50MB
+#spring.servlet.multipart.max-request-size = 50MB 
+#spring.servlet.multipart.resolve-lazily=true #设置为懒加载，不然依然会捕获不到异常
+#server.tomcat.max-swallow-size = 100MB # 最重要的是这一行,可设置为 -1 不作限制
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+      resolve-lazily: true
+      
+    
+      
+
+
+  data:
+      elasticsearch:
+        cluster-name: my-es-02
+        cluster-nodes: 192.168.1.111:9300
+        local: false
+        repositories:
+          enable: true 
   rabbitmq:
-      addresses: 119.61.26.163:5672
-      username: demo
+      addresses: 192.168.1.111:5672
+      username: root
       password: 123456
       publisher-confirms: true
       virtual-host: /
-  
+      
+      #返回json的全局时间格式
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  #返回json的全局时间格式
+
   
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
@@ -13,6 +41,9 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/xiaohua?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
     username: root
     password: 900205
+  activiti:
+    check-process-definitions: false
+    database-schema-update: true
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
@@ -24,6 +55,9 @@ server:
     uri-encoding: UTF-8
     max-threads: 1000
     min-spare-threads: 30
+    max-http-post-size: -1
+    max-http-header-size: -1
+    
   port: 8081
   connection-timeout: 5000ms
   servlet:
@@ -32,36 +66,33 @@ xxl:
   job:
     admin:
       ### xxl-job admin address list, such as "http://address" or "http://address01,http://address02"
-      addresses: http://127.0.0.1:8080/xxl-job-admin
+      addresses: http://192.168.1.111:8081/xxl-job-admin
     ### xxl-job executor address
     executor:
       appname: joke
-      ip: 127.0.0.1
-      port: 9987
+      address: 192.168.1.111
+      ip: 192.168.1.111
+      port: 9989
       ### xxl-job log path
       logpath: /data/applogs/xxl-job/jobhandler
       ### xxl-job log retention days
-      logretentiondays: -1
+      logretentiondays: 30
     ### xxl-job, access token
     accessToken:
-#mybatis
-mybatis: 
-  mapper-locations: classpath*:mapper/**/*.xml
-  type-aliases-package: com.example.demo.modules.user
+       
+       
+  
+mybatis-plus: 
+  mapper-locations: classpath:/mapper/**/*.xml
+  type-aliases-package: com.example.demo.modules.**.entity
   configuration:
     map-underscore-to-camel-case: true
-#  data:
-#    elasticsearch:
-#      cluster-name: my-es-02
-#      cluster-nodes: 10.10.1.60:9300
-#      local: false
-#      repositories:
-#        enable: true 
+  
   
   redis:
       open: true  # 是否开启redis缓存  true开启   false关闭
       database: 0
-      host: 10.10.1.60
+      host: 192.168.1.111
       port: 6379
       password: nldwy    # 密码（默认为空）
       timeout: 6000ms  # 连接超时时长（毫秒）

@@ -1,17 +1,31 @@
 package com.example.demo.modules.user.entity;
 
-public class User {
+import java.util.Date;
+import java.util.List;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+
+@TableName(value = "t_user")
+public class User {
+    @TableId(value = "id" ,type = IdType.AUTO)
 	private Integer id;
 	private String loginacct;
 	private String userpswd;
 	private String username;
 	private String email;
-	private String createtime;
+	private Date createtime;
+	private Integer createUserId;
 	private String type;
 	private String phone;
 	private Integer status;
+	@TableField(exist = false)
 	private String token;
+	
+	@TableField(exist = false)
+	private List<Role> roleList;
 	
 	public String getToken() {
         return token;
@@ -25,13 +39,14 @@ public class User {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public String getCreatetime() {
-		return createtime;
-	}
-	public void setCreatetime(String createtime) {
-		this.createtime = createtime;
-	}
-	public String getEmail() {
+	
+	public Date getCreatetime() {
+        return createtime;
+    }
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
+    }
+    public String getEmail() {
 		return email;
 	}
 	public void setEmail(String email) {
@@ -74,14 +89,27 @@ public class User {
     public void setStatus(Integer status) {
         this.status = status;
     }
+    
+    public List<Role> getRoleList() {
+        return roleList;
+    }
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
+    }
+    public Integer getCreateUserId() {
+        return createUserId;
+    }
+    public void setCreateUserId(Integer createUserId) {
+        this.createUserId = createUserId;
+    }
     @Override
     public String toString() {
         return "User [id=" + id + ", loginacct=" + loginacct + ", userpswd=" + userpswd + ", username=" + username
-                + ", email=" + email + ", createtime=" + createtime + ", type=" + type + ", phone=" + phone
-                + ", status=" + status + "]";
+                + ", email=" + email + ", createtime=" + createtime + ", createUserId=" + createUserId + ", type="
+                + type + ", phone=" + phone + ", status=" + status + ", token=" + token + ", roleList=" + roleList
+                + "]";
     }
    
-    
 
 	
 }

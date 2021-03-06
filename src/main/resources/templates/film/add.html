@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keys" content="">
+    <meta name="author" content="">
+    <!-- <link rel="stylesheet" type="text/css" href="./bootstrap/css/bootstrap.min.css" > -->
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}" >
+    <link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.min.css}" >
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" >
+      <!-- 公用的加密函数 -->
+    <script type="text/javascript" th:src="@{/js/gfyunpublic.js}" ></script>
+    <!-- 加密 -->
+    <script type="text/javascript" th:src="@{/js/core.js}" ></script>
+    <script type="text/javascript" th:src="@{/js/cipher-core.js}" ></script>
+    <script type="text/javascript" th:src="@{/js/mode-ecb.js}"></script>
+    <script type="text/javascript" th:src="@{/js/pad-nopadding.js}" ></script>
+    <script type="text/javascript" th:src="@{/js/aes.js}"></script>
+    
+    <style>
+.tree li {
+        list-style-type: none;
+        cursor:pointer;
+    }
+    </style>
+  </head>
+
+  <body>
+
+   <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+            <div><a class="navbar-brand" style="font-size:32px;" href="user.html">笑话APP - 电影维护</a></div>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li style="padding-top:8px;">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default btn-success dropdown-toggle" data-toggle="dropdown">
+                    <i class="glyphicon glyphicon-user"></i> 张三 <span class="caret"></span>
+                  </button>
+                      <ul class="dropdown-menu" role="menu">
+                        <li><a href="#"><i class="glyphicon glyphicon-cog"></i> 个人设置</a></li>
+                        <li><a href="#"><i class="glyphicon glyphicon-comment"></i> 消息</a></li>
+                        <li class="divider"></li>
+                        <li><a href="login.html"><i class="glyphicon glyphicon-off"></i> 退出系统</a></li>
+                      </ul>
+                </div>
+            </li>
+            <li style="margin-left:10px;padding-top:8px;">
+                <button type="button" class="btn btn-default btn-danger">
+                  <span class="glyphicon glyphicon-question-sign"></span> 帮助
+                </button>
+            </li>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Search...">
+          </form>
+        </div>
+      </div>
+    </nav>
+    <br><br>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <div class="tree">
+                <ul style="padding-left:0px;" class="list-group" id = "listul">
+                </ul>
+            </div>
+        </div>
+       <div class="col-lg-10">
+                <ol class="breadcrumb">
+                  <li><a href="#">电影管理首页</a></li>
+                  <li><a href="#">数据列表</a></li>
+                  <li class="active">新增</li>
+                </ol>
+            <div class="panel panel-default">
+              <div class="panel-heading">表单数据<div style="float:right;cursor:pointer;" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-question-sign"></i></div></div>
+              <div class="panel-body">
+                <form role="form" id="filmForm" action="/film/add" method="post" enctype="multipart/form-data">
+                  <div class="form-group">
+                  <select name="flbh1" id="index_select_class_1" onchange="index_select_class_2_by_class_1(this.value)">
+                    <option class="">请选择</option>
+                  </select>
+                    <select name="flbh2" id="index_select_class_2" >
+                    <option>请选择</option>
+                    </select>
+                    <br>
+                    <!-- <select name="pp_id" id="index_select_tm">
+                    <option>请选择</option>
+                    </select> -->
+                    <label for="exampleInputPassword1">电影名称</label>
+                    <input type="text" class="form-control" name="name" placeholder="请输入电影名称">
+                    <label for="exampleInputPassword1">主演</label>
+                    <input type="text" class="form-control" name="actor" placeholder="主演">
+                    <label for="exampleInputPassword1">番号</label>
+                    <input type="text" class="form-control" name="serialNo" placeholder="请输入电影番号">
+                    
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">电影图片</label>
+                    <img onclick="spu_img_click(1)" id="spu_img_1" style="cursor:pointer;" src="/film/img/upload_hover.png" width="70px;"/>
+                    <input style="display:none;" onchange = "spu_img_replace(1)" id="spu_file_1" type="file" name="files"/><br>
+                  </div>
+                 <!--  <div class="form-group">
+                    <label for="exampleInputEmail1">磁力链接</label>
+                    <input type="email" class="form-control" name="magnet" placeholder="请输入磁力链接">
+                    <p class="help-block label label-warning">请输入合法的磁力, 格式为： xxxx@xxxx.com</p>
+                  </div> -->
+                   
+                  <button type="button" class="btn btn-success" id="insertBtn" onclick="tjbtn()"><i class="glyphicon glyphicon-plus"></i> 提交</button>
+                  <button type="button" class="btn btn-danger" onclick="repl()"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
+                </form>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="myModalLabel">帮助</h4>
+          </div>
+          <div class="modal-body">
+            <div class="bs-callout bs-callout-info">
+                <h4>测试标题1</h4>
+                <p>测试内容1，测试内容1，测试内容1，测试内容1，测试内容1，测试内容1</p>
+              </div>
+            <div class="bs-callout bs-callout-info">
+                <h4>测试标题2</h4>
+                <p>测试内容2，测试内容2，测试内容2，测试内容2，测试内容2，测试内容2</p>
+              </div>
+          </div>
+          <!--
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+          -->
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript" th:src="@{/jquery/jquery-2.1.1.min.js}" ></script>
+    <script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}" ></script>
+    <script type="text/javascript" th:src="@{/script/layer/layer.js}" ></script>
+        <!--引入弹窗组件end-->
+    <script  type="text/javascript" th:src="@{/js/jquery.tips.js}" ></script>
+    <!-- 分页插件 -->
+    <script type="text/javascript" th:src="@{/js/jquery.pagination.js}"></script>
+        <script type="text/javascript">
+            $(function () {
+            	
+            	 //获取用戶權限列表
+                userPerms(0);
+            	
+            	
+                $.getJSON("/json/class_1.js",function(data){
+                    $(data).each(function(i,json){
+                        $("#index_select_class_1").append("<option value='"+json.id+"'>"+json.flmch1+"</option>");
+                    });
+                });
+                
+                $(".list-group-item").click(function(){
+                    if ( $(this).find("ul") ) {
+                        $(this).toggleClass("tree-closed");
+                        if ( $(this).hasClass("tree-closed") ) {
+                            $("ul", this).hide("fast");
+                        } else {
+                            $("ul", this).show("fast");
+                        }
+                    }
+                });
+            });
+          
+            var userId = sessionStorage.getItem('userId');
+            var token = sessionStorage.getItem('token');
+            function userPerms(pageIndex){
+                
+                var loadingIndex = -1;
+                var jsonData = {
+                        userId : userId,
+                        token : token
+                    };
+                $.ajax({
+                    url:"/menu/nav",
+                    type:"GET",
+                    headers: {
+                        Accept: "application/json; charset=utf-8",
+                        token:  ""+ token
+                        },
+                    async:false,
+                    dataType:"json",
+                    data:jsonData,
+                    success:function(data){
+                        $(data.menuList).each(function(i,menu){
+                        	if(i == 0){
+                        		$("#listul").append("<li class='list-group-item' id='listi"+i+"'><span><i class='glyphicon glyphicon-tasks'></i> "+menu.menuName+"<span class='badge' style='float:right'>"+menu.list.length+"</span></span>")
+                        		if(menu.list.length >0){
+                        			$("#listi"+i).append("<ul style='margin-top:10px;' id='listul"+i+"'>");
+                        			$(menu.list).each(function(j,m){
+                        				if(j == 0){
+                        					$("#listul"+i).append("<li style='height:30px;'><a href='role.html' style='color:red;'><i class='glyphicon glyphicon-certificate'></i> " +m.menuName+"</a> </li>")
+                        				}else{
+                        					$("#listul"+i).append("<li style='height:30px;'><a href='role.html' ><i class='glyphicon glyphicon-certificate'></i> " +m.menuName+"</a> </li>")
+                        				}
+                        				
+                        			})
+                        		}
+                        	}else{
+                                    $("#listul").append("<li class='list-group-item tree-closed' id='listi"+i+"'><span><i class='glyphicon glyphicon-tasks'></i> "+menu.menuName+"<span class='badge' style='float:right'>"+menu.list.length+"</span></span></li>")
+                                    if(menu.list.length >0){
+                                        $("#listi"+i).append("<ul style='margin-top:10px;display:none;'  id='listul"+i+"'>");
+                                        $(menu.list).each(function(j,m){
+                                            if(j == 0){
+                                                $("#listul"+i).append("<li style='height:30px;'><a href='role.html' style='color:red;'><i class='glyphicon glyphicon-certificate'></i> " +m.menuName+"</a> </li>")
+                                            }else{
+                                                $("#listul"+i).append("<li style='height:30px;'><a href='role.html' ><i class='glyphicon glyphicon-certificate'></i> " +m.menuName+"</a> </li>")
+                                            }
+                                            
+                                        })
+                                    }
+                        	}
+                        });
+                    }
+                })
+            }
+            
+            function index_select_class_2_by_class_1(class_1_id){
+                // var class_1_id = $("#index_select_class_1").val();
+                // var class_1_id = $("#index_select_class_1 option:selected").val();
+                $.getJSON("/json/class_2_"+class_1_id+".js",function(data){
+                    $("#index_select_class_2").empty();
+                    $(data).each(function(i,json){
+                        $("#index_select_class_2").append("<option value='"+json.id+"'>"+json.flmch2+"</option>");
+                    });
+                });
+                
+                index_select_tm_by_class_1(class_1_id);
+            }
+            
+            function index_select_tm_by_class_1(class_1_id){
+                $.getJSON("/json/tm_class_1_"+class_1_id+".js",function(data){
+                    $("#index_select_tm").empty();
+                    $(data).each(function(i,json){
+                        $("#index_select_tm").append("<option value='"+json.id+"'>"+json.ppmch+"</option>");
+                    });
+                });
+            }
+            
+            
+            $("#insertBtn").click(function(){
+                var loadingIndex = -1;
+                
+            
+                //$("#userForm").submit();
+                $("#userForm").ajaxSubmit({
+                    beforeSubmit : function() {
+                        loadingIndex = layer.load(2, {time: 10*1000});
+                    },
+                    success : function(result) {
+                        layer.close(loadingIndex);
+                        if (result.success) {
+                            window.location.href = "/film/index";
+                        } else {
+                            layer.msg("电影信息保存失败", {time:1500, icon:5, shift:6});
+                        }
+                    }
+                });
+                return;
+                /*
+                var loginacct = $("#loginacct");
+                if ( loginacct.val() == "" ) {
+                    layer.msg("登录账号不能为空，请输入", {time:1000, icon:5, shift:6}, function(){
+                        loginacct.focus();
+                    });
+                    return;
+                }
+                var loadingIndex = -1;
+                $.ajax({
+                    type : "POST",
+                    url  : "${APP_PATH}/user/insert.do",
+                    data : {
+                        "loginacct" : $("#loginacct").val(),
+                        "username"  : $("#username").val(),
+                        "email"     : $("#email").val()
+                    },
+                    beforeSend : function() {
+                        loadingIndex = layer.load(2, {time: 10*1000});
+                    },
+                    success : function(result) {
+                        layer.close(loadingIndex);
+                        if (result.success) {
+                            window.location.href = "${APP_PATH}/user/index.htm";
+                        } else {
+                            layer.msg("用户信息保存失败", {time:1500, icon:5, shift:6});
+                        }
+                    }
+                });
+                */
+            });
+            function add(){
+                var loadingIndex = -1;
+                $("#addForm").ajaxSubmit({
+                    
+                    beforeSubmit:function(){
+                        loadingIndex = layer.load(2, {time: 10*1000});
+                    },
+                    success:function(result){
+                        if(result.success){
+                            window.location.herf="/film/add";
+                        }else{
+                            layer.msg("电影信息保存失败", {time:1500, icon:5, shift:6});
+                        }
+                    }
+                });
+                return false;
+            }
+            function spu_img_click(count){
+                $("#spu_file_"+count).click();
+            }
+            function spu_img_replace(count){
+                // 获得图片对象的缓存
+                var b_img = $("#spu_file_"+count)[0].files[0];
+                // 用图片对象替换按钮
+                $("#spu_img_"+count).attr("src",window.URL.createObjectURL(b_img));
+                
+                // 用户选择最后一张
+                /* var length = $("#spu_img_box input").length;
+                
+                if(count==length){
+                    spu_img_add(count+1);   
+                } */
+            }
+            function repl(){
+                $("#filmForm")[0].reset();
+            }
+            function tjbtn(){
+                var len = $("#spu_file_1").val().length;
+                
+                if(len==""||len==0||len==undefined){
+                    
+                    layer.msg("请选择图片", {time:1500, icon:5, shift:6});
+                    return;
+                }
+                $("#filmForm").submit();
+            }
+        </script>
+  </body>
+</html>

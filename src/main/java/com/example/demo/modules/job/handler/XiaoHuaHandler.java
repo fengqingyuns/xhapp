@@ -19,16 +19,15 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import com.example.demo.util.DateCalcUtil;
 import com.xxl.job.core.biz.model.ReturnT;
 import com.xxl.job.core.handler.IJobHandler;
+import com.xxl.job.core.handler.annotation.XxlJob;
 import com.xxl.job.core.log.XxlJobLogger;
 import com.example.demo.modules.job.service.JokeInputService;
 import com.example.demo.modules.util.AJAXResult;
 import com.example.demo.modules.xiaohua.entity.Joke;
 import com.example.demo.modules.xiaohua.service.*;
-import com.xxl.job.core.handler.annotation.JobHandler;
 //@JobHander(value="jokeHandler")
-@JobHandler(value="jokeHandler")
 @Component
-public class XiaoHuaHandler extends IJobHandler {
+public class XiaoHuaHandler {
 	private static final Logger LOGGER = LoggerFactory.getLogger(XiaoHuaHandler.class);
 	@Autowired
 	private JokeService jokeService;
@@ -36,8 +35,8 @@ public class XiaoHuaHandler extends IJobHandler {
 	private JokeInputService jokeInputService;
 	private static int num = 1;
 
-	@Override
-	public ReturnT<String> execute(String... params) throws Exception {
+	@XxlJob("jokeHandler")
+	public ReturnT<String> jokeHandler(String param) throws Exception {
 		String page = null;
 		String date = null;
 		String pagesize = "20";
@@ -46,16 +45,17 @@ public class XiaoHuaHandler extends IJobHandler {
 		num = jokeService.getNum();
 		ArrayList<Joke> list = null;
 		SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHH");// 设置日期格式
-		if (params != null) {
-			if (params.length >= 1) {
+		if (param != null) {
+		    String[] split = param.split("&");
+			if (split.length >= 1) {
 				
-				date = params[0];// new Date()为获取当前系统时间，也可使用当前时间戳
+				date = split[0];// new Date()为获取当前系统时间，也可使用当前时间戳
 				XxlJobLogger.log("limitTime: {0}, releasenum: {1}", date);
 			}
 
-			if (params.length >= 2) {
-				if (StringUtils.isNotBlank(params[1])) {
-					page = params[1].trim();
+			if (split.length >= 2) {
+				if (StringUtils.isNotBlank(split[1])) {
+					page = split[1].trim();
 					XxlJobLogger.log("limitTime: {0}, releasenum: {1}", page);
 				}
 			}

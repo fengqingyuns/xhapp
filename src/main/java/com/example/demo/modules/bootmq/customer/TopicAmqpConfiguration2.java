@@ -1,4 +1,4 @@
-/*
+
 package com.example.demo.modules.bootmq.customer;
 import org.springframework.amqp.core.AcknowledgeMode;
 import org.springframework.amqp.core.Message;
@@ -14,13 +14,13 @@ import com.example.demo.config.RabbitMqConfig;
 import com.example.demo.modules.bootmq.SerializeUtil;
 import com.example.demo.modules.bootmq.TestUser;
 import com.rabbitmq.client.Channel;
-*/
+
 /**
  * 消费者配置
  *
  * @author li.t
  * @create 2017-10-30 下午3:14
- **//*
+ **/
 
 @Configuration
 @AutoConfigureAfter(RabbitMqConfig.class)
@@ -49,4 +49,4 @@ public class TopicAmqpConfiguration2 {
         };
     }
 
-}*/
+}

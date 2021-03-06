@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keys" content="">
+    <meta name="author" content="">
+    <!-- <link rel="stylesheet" type="text/css" href="./bootstrap/css/bootstrap.min.css" > -->
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}" >
+    <link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.min.css}" >
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" >
+    <link rel="stylesheet" type="text/css" th:href="@{/css/pagination.css}" >
+      <!-- 公用的加密函数 -->
+    <script type="text/javascript" th:src="@{/js/gfyunpublic.js}" ></script>
+    <!-- 加密 -->
+    <script type="text/javascript" th:src="@{/js/core.js}" ></script>
+    <script type="text/javascript" th:src="@{/js/cipher-core.js}" ></script>
+    <script type="text/javascript" th:src="@{/js/mode-ecb.js}"></script>
+    <script type="text/javascript" th:src="@{/js/pad-nopadding.js}" ></script>
+    <script type="text/javascript" th:src="@{/js/aes.js}"></script>
+    
+    <style>
+.tree li {
+        list-style-type: none;
+        cursor:pointer;
+    }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+            <div><a class="navbar-brand" style="font-size:32px;" href="user.html">笑话APP - 电影列表</a></div>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li style="padding-top:8px;">
+                <div class="btn-group">
+                  <button type="button"  class="btn btn-default btn-success dropdown-toggle" data-toggle="dropdown">
+                    <i class="glyphicon glyphicon-user"></i><span id = "button"></span><span  class="caret"></span>
+                  </button>
+                      <ul class="dropdown-menu" role="menu">
+                        <li><a href="#"><i class="glyphicon glyphicon-cog"></i> 个人设置</a></li>
+                        <li><a href="#"><i class="glyphicon glyphicon-comment"></i> 消息</a></li>
+                        <li class="divider"></li>
+                        <li><a href="login.html"><i class="glyphicon glyphicon-off"></i> 退出系统</a></li>
+                      </ul>
+                </div>
+            </li>
+            <li style="margin-left:10px;padding-top:8px;">
+                <button type="button" class="btn btn-default btn-danger">
+                  <span class="glyphicon glyphicon-question-sign"></span> 帮助
+                </button>
+            </li>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Search...">
+          </form>
+        </div>
+      </div>
+    </nav> 
+  
+ 
+    <br><br>
+    <div class="container-fluid">
+    <div class="row-fluid">
+        <!-- <div class="col-lg-2" >
+            <ul class="nav nav-list" id = "user-perm-ul">
+                
+                <li class="active">
+                    <a href="#">菜單管理</a>
+                </li>
+                <li>
+                    <a href="#">用戶管理</a>
+                </li>
+                <li>
+                    <a href="#">角色管理</a>
+                </li>
+            </ul>
+        </div> -->
+         <div class="col-sm-3 col-md-2 sidebar">
+            <div class="tree">
+                <ul style="padding-left:0px;" class="list-group" id = "listul">
+                </ul>
+            </div>
+        </div>
+        
+        
+        <div class="col-lg-10">
+            <ul class="nav nav-tabs" id = "active-manager">
+            <form class="form-inline" role="form" style="float:left;">
+  <div class="form-group has-feedback">
+    <div class="input-group">
+      <div class="input-group-addon">查询条件</div>
+      <input id="queryText" class="form-control has-success" type="text" placeholder="请输入查询条件">
+    </div>
+  </div>
+  <button type="button" id="queryBtn" class="btn btn-warning"><i class="glyphicon glyphicon-search"></i> 查询</button>
+</form>
+<button type="button" class="btn btn-danger" style="float:right;margin-left:10px;" onclick="deleteUsers()"><i class=" glyphicon glyphicon-remove"></i> 删除</button>
+<button type="button" class="btn btn-primary" style="float:right;margin-left:10px;" onclick="toadd()"><i class="glyphicon glyphicon-plus"></i> 新增</button>
+ 
+<button type="button" class="btn btn-primary" style="float:right;" onclick="window.location.href='${APP_PATH}/film/toaddBatch.htm'"><i class="glyphicon glyphicon-plus"></i> 批量新增</button>
+<br>
+               <!--  <li class="active">
+                    <a href="#">菜單管理</a>
+                </li>
+                <li>
+                    <a href="#">用戶管理</a>
+                </li>
+                <li class="disabled">
+                    <a href="#">角色管理</a>
+                </li> -->
+            </ul>
+            <table class="table">
+                 <thead >
+                    <tr  id = "kindthead">
+                    <th>
+              全选                            <input type='checkbox' onclick='selectAllBox(this)'>        
+                    </th>
+           <!--              <th>
+                            编号
+                        </th> -->
+                        <th>
+                            电影名称
+                        </th>
+            
+                        <th>
+                           图片
+                        </th>
+                              <th>
+                           主演
+                        </th>
+                        <th>
+                            创建时间
+                        </th>
+                   <th>
+                           热度
+                        </th> 
+                        <th>
+                        發佈者
+                        </th>
+                        <th>
+                            操作
+                        </th> 
+                    </tr>
+                </thead> 
+                <tbody id = "kindbody" >
+             <!--        <tr>
+                        <td>
+                            1
+                        </td>
+                        <td>
+                            TB - Monthly
+                        </td>
+                        <td>
+                            01/04/2012
+                        </td>
+                        <td>
+                            Default
+                        </td>
+                    </tr>
+                    <tr class="success">
+                        <td>
+                            1
+                        </td>
+                        <td>
+                            TB - Monthly
+                        </td>
+                        <td>
+                            01/04/2012
+                        </td>
+                        <td>
+                            Approved
+                        </td>
+                    </tr>
+                    <tr class="error">
+                        <td>
+                            2
+                        </td>
+                        <td>
+                            TB - Monthly
+                        </td>
+                        <td>
+                            02/04/2012
+                        </td>
+                        <td>
+                            Declined
+                        </td>
+                    </tr>
+                    <tr class="warning">
+                        <td>
+                            3
+                        </td>
+                        <td>
+                            TB - Monthly
+                        </td>
+                        <td>
+                            03/04/2012
+                        </td>
+                        <td>
+                            Pending
+                        </td>
+                    </tr>
+                    <tr class="info">
+                        <td>
+                            4
+                        </td>
+                        <td>
+                            TB - Monthly
+                        </td>
+                        <td>
+                            04/04/2012
+                        </td>
+                        <td>
+                            Call in to confirm
+                        </td>
+                    </tr> -->
+                </tbody>
+                 <tfoot>
+                 <tr >
+                     <td colspan="6" align="center">
+                         <div id="Pagination" class="pagination"></div>
+                         <!-- <ul class="pagination"></ul>
+                           
+                                <li class="disabled"><a href="#">上一页</a></li>
+                                <li ><a href="#">1 <span class="sr-only">(current)</span></a></li>
+                                <li class="active"><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li><a href="#">下一页</a></li>
+                                 -->
+                             
+                     </td>
+                 </tr>
+
+              </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" th:src="@{/jquery/jquery-2.1.1.min.js}" ></script>
+    <script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}" ></script>
+    <script type="text/javascript" th:src="@{/script/layer/layer.js}" ></script>
+        <!--引入弹窗组件end-->
+    <script  type="text/javascript" th:src="@{/js/jquery.tips.js}" ></script>
+    <!-- 分页插件 -->
+    <script type="text/javascript" th:src="@{/js/jquery.pagination.js}"></script>
+    <script th:inline="javascript">
+    var actorname = "";var actname = null;
+    $(function(){
+    	var userName = sessionStorage.getItem('loginacct');
+    	 $('#button').text(userName);
+    	actname = [[${actorname}]];
+        //获取用戶權限列表
+        userPerms(0);
+        
+        $(".list-group-item").click(function(){
+            if ( $(this).find("ul") ) {
+                $(this).toggleClass("tree-closed");
+                if ( $(this).hasClass("tree-closed") ) {
+                    $("ul", this).hide("fast");
+                } else {
+                    $("ul", this).show("fast");
+                }
+            }
+        });
+        
+    });
+    
+    function selectAllBox( cbox ) {
+        // 全选框的选中状态
+        var flg = cbox.checked;
+        // 获取所有的用户复选框
+        // $.each(list, function(i, n){});
+        // jquery集合.each(function(i, n){});
+        $("#kindbody :checkbox").each(function(i, c){
+            c.checked = flg;
+        });
+    }
+    
+    var userId = sessionStorage.getItem('userId');
+    var token = sessionStorage.getItem('token');
+    function userPerms(pageIndex){
+        
+        var loadingIndex = -1;
+        var jsonData = {
+                userId : userId,
+                token : token
+            };
+        $.ajax({
+            url:"/menu/nav",
+            type:"GET",
+            headers: {
+                Accept: "application/json; charset=utf-8",
+                token:  ""+ token
+                },
+            async:false,
+            dataType:"json",
+            data:jsonData,
+            success:function(data){
+                $(data.menuList).each(function(i,menu){
+                    if(i == 0){
+                        $("#listul").append("<li class='list-group-item' id='listi"+i+"'><span><i class='glyphicon glyphicon-tasks'></i> "+menu.menuName+"<span class='badge' style='float:right'>"+menu.list.length+"</span></span>")
+                        if(menu.list.length >0){
+                            $("#listi"+i).append("<ul style='margin-top:10px;' id='listul"+i+"'>");
+                            $(menu.list).each(function(j,m){
+                                if(j == 0){
+                                    $("#listul"+i).append("<li style='height:30px;'><a href='"+m.url+"' style='color:red;'><i class='glyphicon glyphicon-certificate'></i> " +m.menuName+"</a> </li>")
+                                }else{
+                                    $("#listul"+i).append("<li style='height:30px;'><a href='"+m.url+"' ><i class='glyphicon glyphicon-certificate'></i> " +m.menuName+"</a> </li>")
+                                }
+                                
+                            })
+                        }
+                    }else{
+                            $("#listul").append("<li class='list-group-item tree-closed' id='listi"+i+"'><span><i class='glyphicon glyphicon-tasks'></i> "+menu.menuName+"<span class='badge' style='float:right'>"+menu.list.length+"</span></span></li>")
+                            if(menu.list.length >0){
+                                $("#listi"+i).append("<ul style='margin-top:10px;display:none;'  id='listul"+i+"'>");
+                                $(menu.list).each(function(j,m){
+                                    if(j == 0){
+                                        $("#listul"+i).append("<li style='height:30px;'><a href='"+m.url+"' style='color:red;'><i class='glyphicon glyphicon-certificate'></i> " +m.menuName+"</a> </li>")
+                                    }else{
+                                        $("#listul"+i).append("<li style='height:30px;'><a href='"+m.url+"' ><i class='glyphicon glyphicon-certificate'></i> " +m.menuName+"</a> </li>")
+                                    }
+                                    
+                                })
+                            }
+                    }
+                });
+               // $("#active-manager").html("<li class='active'style='background-color:#9C9FFF;' ><a style='background-color:#9C9FFF;' href='#'>"+data.menuList.shift().list.shift().menuName+"</a> </li>"); 
+                //
+                kindlist(0);
+            }
+        })
+        
+    }
+    
+    function kindlist(pageIndex){
+    	  var jsonData = {
+                  page : pageIndex,
+                  size : 5,
+             };
+    	if(actname != null){
+    		 jsonData["actorname"] = [[${actorname}]];
+    	}
+      
+        jsonData["queryText"] = $("#queryText").val();
+        $.ajax({
+            url:"/film/filmList",
+            type:"GET",
+            headers:{
+                Accept: "application/json; charset=utf-8",
+                token:  ""+ token
+            },
+            async:false,
+            dataType:"json",
+            data:jsonData,
+            success:function(data){
+            	if(data.list != null && data.list.length>0){
+            		   var dataContent = "";
+                       $.each(data.list, function(i, film){
+                           dataContent = dataContent + '<tr>';
+                           dataContent = dataContent + '  <td><input type="checkbox" value='+film.id+'></td>';
+                           dataContent = dataContent + '  <td><a herf = "#" onclick="window.location.href=\'/film/filmInfo?id='+film.id+'\'">'+film.name+'</a></td>';
+                           dataContent = dataContent + '  <td><img src="/film/img/'+film.picture+'" width="70px;"/></td>';
+                           dataContent = dataContent + '  <td>'+film.actor+'</td>';
+                           dataContent = dataContent + '  <td>'+film.createTime+'</td>';
+                           dataContent = dataContent + '  <td>'+film.hot+'</td>';
+                           dataContent = dataContent + '  <td>'+film.createUserName+'</td>';
+                           dataContent = dataContent + '  <td>';
+                           dataContent = dataContent + '      <button type="button" class="btn btn-success btn-xs" onclick="window.location.href=\'/film/toAddInfo?id='+film.id+'\'"><i class=" glyphicon glyphicon-check"></i></button>';
+                           dataContent = dataContent + '      <button type="button" class="btn btn-primary btn-xs" onclick="updateUser('+film.id+', '+(pageIndex+1)+')"><i class=" glyphicon glyphicon-pencil"></i></button>';
+                           dataContent = dataContent + '      <button type="button" class="btn btn-danger btn-xs" onclick="deleteUser(\''+film.id+'\', \''+film.name+'\')"><i class=" glyphicon glyphicon-remove"></i></button>';
+                           dataContent = dataContent + '  </td>';
+                           dataContent = dataContent + '</tr>';
+                       });
+                      $("#kindbody").html(dataContent);
+                      $("#Pagination").pagination(data.pageResult.pages, {
+                          num_edge_entries: 2, //边缘页数
+                          num_display_entries: 5, //主体页数
+                          callback: kindlist,
+                          items_per_page:1, //每页显示1项
+                          prev_text:"上一页",
+                          next_text:"下一页",
+                          current_page:pageIndex
+                      });
+                  }else{
+                	  $("#kindbody").html("");
+                  }
+            	}
+            
+        })
+    }
+    
+    $("#queryBtn").click(function(){
+        var queryText = $("#queryText");
+        if(queryText.val() == ""){
+            layer.msg("请输入查询条件",{time:1500, icon:5, shift:6},function(){
+                queryText.focus();
+            });
+            return ;
+        }
+        kindlist(0);
+    });
+    
+    
+    function deleteUser(filmid,filmName){
+    	var jsonData = {
+    			"id":""+ filmid,
+    			"name":filmName
+    	}
+    	layer.confirm("删除电影"+filmName+"是否继续?",{icon:3,title:'提示'},function(cindex){
+    		//删除电影信息
+    		$.ajax({
+    			type:"POST",
+    			 headers: {
+    	                Accept: "application/json; charset=utf-8",
+    	                token:  ""+ token
+    	                },
+    			 url:"/film/del",
+    			 data:jsonData,
+    			 success:function(data){
+    				 if(data.code == 0){
+    					 layer.msg("电影删除成功", {time:1500, icon:6}, function(){
+    						 window.location.href = "/film/index?token="+token;
+    					 })} else{
+    						 layer.msg(data.msg, {time:1500, icon:5, shift:6});
+    					 }
+    				 }
+    		});
+    		layer.close(cindex);
+    	},function(cindex){
+    		layer.close(cindex);
+    	});
+    }
+    
+    function toadd(){
+    	window.location.href="/film/toAdd?token="+token;
+    }
+    </script>
+  </body>
+</html>

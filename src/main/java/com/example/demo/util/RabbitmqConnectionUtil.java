@@ -12,11 +12,11 @@ public class RabbitmqConnectionUtil {
         
         ConnectionFactory factory = new ConnectionFactory();
         
-        factory.setHost("119.61.26.163");
+        factory.setHost("39.98.226.58");
         factory.setPort(5672);
         factory.setVirtualHost("/");
-        factory.setUsername("demo");
-        factory.setPassword("123456");
+        factory.setUsername("admin");
+        factory.setPassword("admin");
         return factory.newConnection();
     }
 }

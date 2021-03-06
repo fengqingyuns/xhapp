@@ -76,6 +76,7 @@ public class ZhouGongSleepDreamService {
 			HttpClient httpClient = HttpClient.get(url);
 			httpClient.timeout(HTTP_CONN_TIME_OUT, HTTP_SOCKET_TIME_OUT);
 			httpClient.addParameters(data);
+			
 			hcres = httpClient.action();
 		} catch (Exception e) {
 			LOGGER.error("error", e);

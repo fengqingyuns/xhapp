@@ -365,7 +365,7 @@
                        $.each(data.list, function(i, film){
                            dataContent = dataContent + '<tr>';
                            dataContent = dataContent + '  <td><input type="checkbox" value='+film.id+'></td>';
-                           dataContent = dataContent + '  <td><a herf = "#" onclick="window.location.href=\'/film/filmInfo?id='+film.id+'\'">'+film.name+'</a></td>';
+                           dataContent = dataContent + '  <td><a herf = "#" onclick="window.location.href=\'/film/filmInfo?filmid='+film.id+'\'">'+film.name+'</a></td>';
                            dataContent = dataContent + '  <td><img src="/film/img/'+film.picture+'" width="70px;"/></td>';
                            dataContent = dataContent + '  <td>'+film.actor+'</td>';
                            dataContent = dataContent + '  <td>'+film.createTime+'</td>';

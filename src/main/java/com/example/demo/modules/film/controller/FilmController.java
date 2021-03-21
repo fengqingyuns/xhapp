@@ -256,14 +256,14 @@ public class FilmController extends AbstractController{
     }
     
     @RequestMapping("/filmInfo")
-    public String filmInfo(String id,Model model) {
-        model.addAttribute("filmId", id);
+    public String filmInfo( String filmid,Model model) {
+        model.addAttribute("filmId", filmid);
         return "film/filminfo";
     }
     
     @RequestMapping("/filmInfoList")
     @ResponseBody
-    public R filmInfoList(String filmId,@PageableDefault Pageable pageable) {
+    public R filmInfoList(String filmId, Pageable pageable) {
         SearchQuery query = new NativeSearchQueryBuilder().
                 withQuery(QueryBuilders.
                         matchQuery("id", filmId)).
@@ -292,7 +292,7 @@ public class FilmController extends AbstractController{
         }
         //不对传来的值分词，去找完全匹配的 
         SearchQuery querys = new NativeSearchQueryBuilder().
-                withQuery(QueryBuilders.termQuery("filmId", filmId)).
+                withQuery(QueryBuilders.matchQuery("filmId", filmId)).
                 withPageable(pageable).
                 build();
         AggregatedPage<FilmInfo> page = elasticsearchTemplate.queryForPage(querys, FilmInfo.class);
@@ -310,16 +310,17 @@ public class FilmController extends AbstractController{
                     build();
             List<FilmInfo> list = elasticsearchTemplate.queryForList(query, FilmInfo.class);
             LOGGER.info("list:{}", list);
-            FilmInfo info = null;
+            FilmInfo info = null;String filmId = "";
             if(list != null && list.size()>0) {
                  info = list.get(0);
+                 filmId = info.getFilmId();
                  if(info.getCreateUserId() != getUserId()) {
                      return R.error(PERMISSION_ERROR.getMsg());
                  }
             }
             String delete = elasticsearchTemplate.delete("filminfo", "filminfo", id);
             LOGGER.info("delete:{}", delete);
-          return R.ok(SUCCESS.getMsg()).put("id", id);
+          return R.ok(SUCCESS.getMsg()).put("id", filmId);
     }
     
     @RequestMapping("/actorlist")

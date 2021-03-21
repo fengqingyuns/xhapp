@@ -114,7 +114,7 @@ public class UserController extends AbstractController{
             return R.error(PERMISSION_ERROR.getMsg());
         }
         User byId = userService.getById(id);
-        if(byId.getCreateUserId() != getUserId()) {
+        if(!byId.getType().equals("会员") && byId.getCreateUserId() != getUserId()) {
             return R.error(NOT_CREATE_USER.getMsg());
         }
         boolean removeById = userService.removeById(id);

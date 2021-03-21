@@ -337,7 +337,7 @@
     function kindlist(pageIndex){
         var jsonData = {
         		 filmId :filmId+"",
-                 page : pageIndex+1,
+                 page : pageIndex,
                  size : 5,
             };
         $.ajax({
@@ -401,9 +401,9 @@
                  data:jsonData,
                  success:function(data){
                      if(data.code == 0){
-                    	 var id = data.id;
+                    	
                          layer.msg("电影删除成功", {time:1500, icon:6}, function(){
-                             window.location.href = "/film/filmInfo?id = "+id+"&token="+token;
+                             window.location.href = "/film/filmInfo?filmid="+data.id;
                          })} else{
                              layer.msg(data.msg, {time:1500, icon:5, shift:6});
                          }

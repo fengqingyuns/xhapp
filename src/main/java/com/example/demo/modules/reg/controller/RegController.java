@@ -58,6 +58,7 @@ public class RegController {
 				}
 				user.setUserpswd(MD5Util.digest(user.getUserpswd()));
 				regUserService.addUser(user);
+				
 				result.setSuccess(true);
 				result.setMsg("注册成功");
 			} catch (Exception e) {

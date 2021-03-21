@@ -53,6 +53,13 @@ public class MainAppController extends AbstractController{
     public String index() {
         return "menu/index";
     }
+    
+    @RequestMapping("/toadd")
+    @RequiresPermissions("app:menu:add")
+    public String toadd() {
+        return "menu/add";
+    }
+    
     /**
      * 
      * @author lit

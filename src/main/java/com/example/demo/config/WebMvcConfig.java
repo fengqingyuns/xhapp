@@ -11,6 +11,8 @@ public class WebMvcConfig implements WebMvcConfigurer{
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/film/img/**").
-        addResourceLocations("file:F:\\spring-boot-project-test\\XhApp\\src\\main\\resources\\static\\film\\img\\");
+       // addResourceLocations("file:F:\\spring-boot-project-test\\XhApp\\src\\main\\resources\\static\\film\\img\\");
+        addResourceLocations("file:D:\\work\\xhapp\\xhapp\\src\\main\\resources\\static\\film\\img\\");
+        
     }
 }

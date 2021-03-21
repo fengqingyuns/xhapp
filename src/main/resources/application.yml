@@ -17,12 +17,12 @@ spring:
   data:
       elasticsearch:
         cluster-name: my-es-02
-        cluster-nodes: 192.168.1.111:9300
+        cluster-nodes: 192.168.11.111:9300
         local: false
         repositories:
           enable: true 
   rabbitmq:
-      addresses: 192.168.1.111:5672
+      addresses: 192.168.11.111:5672
       username: root
       password: 123456
       publisher-confirms: true
@@ -66,11 +66,11 @@ xxl:
   job:
     admin:
       ### xxl-job admin address list, such as "http://address" or "http://address01,http://address02"
-      addresses: http://192.168.1.111:8081/xxl-job-admin
+      addresses: http://192.168.11.111:8081/xxl-job-admin
     ### xxl-job executor address
     executor:
       appname: joke
-      address: 192.168.1.111
+      address: 192.168.11.111
       ip: 192.168.1.111
       port: 9989
       ### xxl-job log path
@@ -92,7 +92,7 @@ mybatis-plus:
   redis:
       open: true  # 是否开启redis缓存  true开启   false关闭
       database: 0
-      host: 192.168.1.111
+      host: 192.168.11.111
       port: 6379
       password: nldwy    # 密码（默认为空）
       timeout: 6000ms  # 连接超时时长（毫秒）

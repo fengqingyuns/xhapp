@@ -41,7 +41,7 @@ public class TestActiviti {
         public void findTasksByUserId() {
             String userId ="dulingjiang";
             List<Task> resultTask = taskService.createTaskQuery().processDefinitionKey("MyProcess").taskCandidateOrAssigned(userId).list();
-            System.out.println("任务-列表："+resultTask);
+            System.out.println("任务列表："+resultTask);
         }
 
     
